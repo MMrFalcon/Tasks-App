@@ -13,7 +13,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.assertNotNull;
+import static org.mockito.Mockito.*;
 
 public class TaskServiceImplTest {
 
@@ -57,5 +58,19 @@ public class TaskServiceImplTest {
         Iterable<Task> foundTasks = taskService.getTasks();
 
         assertEquals(tasks.size(), ((Collection<?>) foundTasks).size());
+    }
+
+    @Test
+    public void save() {
+        when(taskRepository.save(firstTask)).thenReturn(firstTask);
+
+        Task savedTask = taskService.save(firstTask);
+
+        assertNotNull(savedTask);
+        assertEquals(firstTask.getName(), savedTask.getName());
+        assertEquals(firstTask.getDueDate(), savedTask.getDueDate());
+        assertEquals(firstTask.isCompleted(), savedTask.isCompleted());
+
+        verify(taskRepository, times(1)).save(firstTask);
     }
 }
