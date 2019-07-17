@@ -60,7 +60,7 @@ public class TaskControllerTest {
     public void getTasks() throws Exception {
         when(taskService.getTasks()).thenReturn(tasks);
 
-        mockMvc.perform(get("/api/task/"))
+        mockMvc.perform(get("/api/tasks/"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$", hasSize(2)))
