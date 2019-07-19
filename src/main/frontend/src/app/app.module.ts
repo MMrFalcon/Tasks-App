@@ -5,7 +5,7 @@ import {AppComponent} from './app.component';
 import {TasksComponent} from './tasks/tasks.component';
 import {TasksAddComponent} from './tasks/tasks-add/tasks-add.component';
 import {TasksListComponent} from './tasks/tasks-list/tasks-list.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {TaskService} from "./tasks/task.service";
 import {HttpClientModule} from "@angular/common/http";
 
@@ -19,7 +19,8 @@ import {HttpClientModule} from "@angular/common/http";
     imports: [
         BrowserModule,
         ReactiveFormsModule,
-        HttpClientModule
+        HttpClientModule,
+        FormsModule
     ],
   providers: [TaskService, HttpClientModule],
   bootstrap: [AppComponent]
