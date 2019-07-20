@@ -2,6 +2,7 @@ package com.falcon.tasks.controller;
 
 import com.falcon.tasks.domain.Task;
 import com.falcon.tasks.service.TaskService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
@@ -15,9 +16,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 public class TaskControllerTest {
@@ -63,11 +64,25 @@ public class TaskControllerTest {
         mockMvc.perform(get("/api/tasks/"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].name", is(SECOND_TASK_NAME)))
-                .andExpect(jsonPath("$[1].name", is(FIRST_TASK_NAME)));
+                .andExpect(jsonPath("$", hasSize(2)));
 
         verify(taskService, times(1)).getTasks();
+
+    }
+
+    @Test
+    public void saveTask() throws Exception {
+
+        String jsonObject = (new ObjectMapper()).valueToTree(firstTask).toString();
+        when(taskService.save(any())).thenReturn(firstTask);
+
+        mockMvc.perform(post("/api/tasks/save")
+                .content(jsonObject)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        verify(taskService, times(1)).save(any());
 
     }
 }
