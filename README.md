@@ -1,7 +1,5 @@
 # Tasks-App
 
-[![CircleCI](https://circleci.com/gh/MMrFalcon/Tasks-App.svg?style=svg)](https://circleci.com/gh/MMrFalcon/Tasks-App)
-
 ### Used technologies:
 
 ---
